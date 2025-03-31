@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.function.Consumer;
 
 /** 
  * MIT License
@@ -117,35 +118,50 @@ public class App {
         
     }
 
-    public static void marcarTempo(int[] vetor) {
+    public static void marcarTempo(int[] vetor, Consumer funcao) {
         long inicio = System.nanoTime();
-        codigo3(vetor);
+        // codigo3(vetor);
+        funcao.accept(vetor);
         duracao = (System.nanoTime() - inicio) * nanoToMilli;
     }
 
-    public static String executarTeste(int[] vetor) {
-        marcarTempo(vetor);
+    public static String executarTeste(int[] vetor, Consumer funcao) {
+        marcarTempo(vetor, funcao);
         return String.format("Tamanho: %,2d | Operações: %,2d | Tempo: %,2f\n",
                             vetor.length, operacoes, duracao);
     }
 
     public static void main(String[] args) {
         int[] tamanhosTeste = tamanhosTesteMedio;
-
-        for (int i = 0; i < tamanhosTeste.length; i++) {
-
-            // Versão para códigos 1, 2 e 3:
-            int[] vetorDados = gerarVetor(tamanhosTeste[i]);
-            System.out.println(executarTeste(vetorDados));
+        Consumer<int[]> funcao = App::codigo1;
 
 /*
-            // Versão para código 4:
+        // Versão para códigos 1, 2 e 3:
+        for (int i = 0; i < tamanhosTeste.length; i++) {
+
+            int[] vetorDados = gerarVetor(tamanhosTeste[i]);
+            System.out.println(executarTeste(vetorDados));
+        }
+*/
+
+/*
+        // Versão para código 4:
+        for (int i = 0; i < tamanhosTeste.length; i++) {
             long inicio = System.nanoTime();
             codigo4(tamanhosTeste[i]);
             duracao = (System.nanoTime() - inicio) * nanoToMilli;
             System.out.printf("Tamanho: %,2d | Operações: %,2d | Tempo: %,2f ms\n",
                             tamanhosTeste[i], operacoes, duracao);
-*/
         }
+*/
+
+        for(int i = 0; i < tamanhosTeste.length; i++){
+            int[] vetor = gerarVetor(tamanhosTeste[i]);
+            executarTeste(vetor, funcao);
+            funcao = App::codigo2;
+            executarTeste(vetor, funcao);
+        }
+
     }
+
 }
