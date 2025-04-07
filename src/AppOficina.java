@@ -153,7 +153,7 @@ public class AppOficina {
         Produto localizado = null;
         
         for (int i = 0; i < quantProdutos && localizado == null; i++) {
-            if (produtos[i].descricao.equals(desc))
+            if (produtosDesc[i].descricao.equals(desc))
                 localizado = produtosDesc[i];
         }
         return localizado;
