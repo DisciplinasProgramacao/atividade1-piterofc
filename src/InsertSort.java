@@ -9,13 +9,12 @@ public class InsertSort<T extends Comparable<T>> implements IOrdenador<T>{
 	private long movimentacoes;
 	private LocalDateTime inicio;
 	private LocalDateTime termino;	
-	
+
 	public InsertSort() {
 		comparacoes = 0;
 		movimentacoes = 0;
 	}
-	
-	
+
 
 	@Override
 	public T[] ordenar(T[] dados) {
@@ -26,9 +25,9 @@ public class InsertSort<T extends Comparable<T>> implements IOrdenador<T>{
 	public T[] ordenar(T[] dados, Comparator<T> comparador) {
 		T[] dadosOrdenados = Arrays.copyOf(dados, dados.length);
 		int tamanho = dadosOrdenados.length;
-		
+
 		inicio = LocalDateTime.now();
-		
+
 		for (int posReferencia = 1; posReferencia <= tamanho -1; posReferencia++) {
 			T valor = dadosOrdenados[posReferencia];
             int j = posReferencia-1;
@@ -38,10 +37,10 @@ public class InsertSort<T extends Comparable<T>> implements IOrdenador<T>{
                 j--;
                 comparacoes++;
             }
-                
+
             copiarDados(j+1, posReferencia, dadosOrdenados);
             dadosOrdenados[j+1] = valor;
-            
+
 		}	
 		termino = LocalDateTime.now();
 
@@ -54,20 +53,17 @@ public class InsertSort<T extends Comparable<T>> implements IOrdenador<T>{
             vet[i] = vet[i-1];
         }
 	}
-	
+
 	public long getComparacoes() {
 		return comparacoes;
 	}
-	
+
 	public long getMovimentacoes() {
 		return movimentacoes;
 	}
-	
+
 	public double getTempoOrdenacao() {
 	    return  Duration.between(inicio, termino).toMillis();	    
 	}
 
-	
-
-	
 }
